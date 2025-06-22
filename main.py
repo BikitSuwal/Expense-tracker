@@ -32,3 +32,16 @@ def delete_expense():
     with open("expenses.txt", "w") as f:
         f.writelines(lines)
     print("Expense deleted.")
+
+def total_expenses():
+    total = 0.0
+    try:
+        with open("expenses.txt", "r") as f:
+            for line in f:
+                parts = line.strip().split(",")
+                if len(parts) == 3:
+                    amount = float(parts[2])
+                    total += amount
+        print(f"Total expenses: Rs {total:.2f}")
+    except FileNotFoundError:
+        print("No expenses recorded yet.")
