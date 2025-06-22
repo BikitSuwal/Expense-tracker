@@ -2,6 +2,7 @@ from add_expense import add_expense
 from view_expense import view_expense
 from delete_expense import delete_expense
 from total_expense import total_expenses
+from logging import setup_logger  
 
 def menu():
     print("\nExpense Tracker")
@@ -12,6 +13,7 @@ def menu():
     print("5. Exit")
 
 def main():
+    setup_logger() 
     while True:
         menu()
         choice = input("Choose an option: ").strip()
