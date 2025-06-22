@@ -1,85 +1,33 @@
-#Expense tracker project
+from add_expense import add_expense
+from view_expense import view_expense
+from delete_expense import delete_expense
+from total_expense import total_expenses
 
-def add_expense():
-    name = input("Enter expense name: ").strip()
-    while not name:
-        print("Expense name cannot be empty.")
-        name = input("Enter expense name: ").strip()
+def menu():
+    print("\nExpense Tracker")
+    print("1. Add Expense")
+    print("2. View Expenses")
+    print("3. Delete Expense")
+    print("4. Show Total Expenses")
+    print("5. Exit")
 
-    category = input("Enter category: ").strip()
-    while not category:
-        print("Category cannot be empty.")
-        category = input("Enter category: ").strip()
-
+def main():
     while True:
-        amount = input("Enter amount: ").strip()
-        try:
-            amount_float = float(amount)
-            if amount_float < 0:
-                print("Amount cannot be negative.")
-                continue
+        menu()
+        choice = input("Choose an option: ").strip()
+        if choice == "1":
+            add_expense()
+        elif choice == "2":
+            view_expense()
+        elif choice == "3":
+            delete_expense()
+        elif choice == "4":
+            total_expenses()
+        elif choice == "5":
+            print("Goodbye!")
             break
-        except ValueError:
-            print("Please enter a valid number for amount.")
+        else:
+            print("Invalid choice. Please select 1-5.")
 
-    with open("expenses.txt", "a") as f:
-        f.write(f"{name},{category},{amount_float}\n")
-
-def view_expense():
-    try:
-        with open("expenses.txt", "r") as f:
-            lines = f.readlines()
-            if not lines:
-                print("No expenses recorded yet.")
-                return
-            print(f"{'Name':<20} {'Category':<15} {'Amount':<10}")
-            print("-" * 45)
-            for line in lines:
-                parts = line.strip().split(",")
-                if len(parts) == 3:
-                    name, category, amount = parts
-                    print(f"{name:<20} {category:<15} {amount:<10}")
-    except FileNotFoundError:
-        print("No expenses recorded yet.")
-
-def delete_expense():
-    try:
-        with open("expenses.txt", "r") as f:
-            lines = f.readlines()
-        if not lines:
-            print("No expenses to delete.")
-            return
-        for idx, line in enumerate(lines, 1):
-            print(f"{idx}. {line.strip()}")
-        while True:
-            num = input("Enter the number of the expense to delete: ").strip()
-            if not num.isdigit():
-                print("Please enter a valid number.")
-                continue
-            num = int(num)
-            if 1 <= num <= len(lines):
-                break
-            else:
-                print(f"Please enter a number between 1 and {len(lines)}.")
-        del lines[num - 1]
-        with open("expenses.txt", "w") as f:
-            f.writelines(lines)
-        print("Expense deleted.")
-    except FileNotFoundError:
-        print("No expenses to delete.")
-
-def total_expenses():
-    total = 0.0
-    try:
-        with open("expenses.txt", "r") as f:
-            for line in f:
-                parts = line.strip().split(",")
-                if len(parts) == 3:
-                    try:
-                        amount = float(parts[2])
-                        total += amount
-                    except ValueError:
-                        continue
-        print(f"Total expenses: Rs {total:.2f}")
-    except FileNotFoundError:
-        print("No expenses recorded yet.")
+if __name__ == "__main__":
+    main()
