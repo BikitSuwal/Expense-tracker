@@ -2,7 +2,7 @@ from add_expense import add_expense
 from view_expense import view_expense
 from delete_expense import delete_expense
 from total_expense import total_expenses
-from logging import setup_logger  
+from expense_logger import setup_logger  
 
 def menu():
     print("\nExpense Tracker")

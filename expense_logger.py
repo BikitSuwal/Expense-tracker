@@ -1,3 +1,4 @@
+
 import logging
 
 def setup_logger():
@@ -5,4 +6,5 @@ def setup_logger():
         filename="expense_tracker.log",
         level=logging.INFO,
         format="%(asctime)s - %(levelname)s - %(message)s"
+
     )
